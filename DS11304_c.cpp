@@ -17,6 +17,7 @@ public:
     {
         if(top == SIZE-1)
         {
+            if(bot==-1)
             return -1;
         }
         data[top++] = dt;

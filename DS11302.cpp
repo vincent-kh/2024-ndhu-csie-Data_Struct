@@ -11,9 +11,11 @@ class Memory
     {
       T **p;
       p = (T **)malloc(m * sizeof(T *));
-      p[0] = (T *)malloc(m * n * sizeof(T));
-      for(int i = 1;i < m;i ++)
-        p[i] = p[i - 1] + n;
+      T *data = (T *)malloc(m * n * sizeof(T));
+      for (int i = 0; i < m; i++)
+      {
+          p[i] = &data[i * n];
+      }
       return p;
     }
 };
