@@ -31,9 +31,6 @@ private:
 	Node *next, *pre; 
 };
 
-bool operator <(Node &a, Node &b){return a.getData() < b.getData();}
-bool operator >(Node &a, Node &b){return a.getData() > b.getData();}
-
 class List
 {
 public:
@@ -83,12 +80,24 @@ public:
 	{
 		Node* cur = list->getNext();
 		Node* temp=cur;
-		if(cur<cur->getPre() && cur->getPre()!=NULL)
+		while(1)
 		{
-			swap(cur,cur->getPre());
-			cur=cur->getPre();
+			if(cur->getData()<cur->getPre()->getData() && cur->getPre()!=NULL)
+			{
+				swap(cur,cur->getPre());
+				cur=cur->getPre();
+			}
+			else
+			{
+				if(temp->getNext()!=NULL)
+				{
+					temp=temp->getNext();
+					cur=temp;
+				}
+				else
+					break;
+			}
 		}
-
 	} 
 	
     void swap(Node *a, Node *b)

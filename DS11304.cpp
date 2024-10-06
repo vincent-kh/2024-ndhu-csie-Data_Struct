@@ -11,24 +11,23 @@ public:
     Queue()
     {
         top = 0;
-        bot = -1;
+        bot = 0;
     }
     int enqueue(int dt)
     {
         if(top == SIZE-1)
-        {
             return -1;
-        }
-        data[top++] = dt;
+        data[top] = dt;
+        top++;
         return 1;
     }
     int *dequeue()
     {
-        if(bot == top-1)
+        if(bot == top)
         {
             return NULL;
         }
-        return &data[(bot++)+1];
+        return &data[bot++];
     }
 private:
     int data[SIZE];
