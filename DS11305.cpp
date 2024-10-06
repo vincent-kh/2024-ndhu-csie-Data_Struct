@@ -20,8 +20,6 @@ public:
 		next = NULL;
 		pre = NULL;
 	}
-    bool const operator>(Node &n) { return data > n.getData(); }
-    bool const operator<(Node &n) { return data < n.getData(); }
 	int getData() { return data; }
 	Node *getNext() { return next; }
 	Node *getPre() { return pre; }
@@ -32,6 +30,9 @@ private:
 	int data;
 	Node *next, *pre; 
 };
+
+bool operator <(Node &a, Node &b){return a.getData() < b.getData();}
+bool operator >(Node &a, Node &b){return a.getData() > b.getData();}
 
 class List
 {
@@ -80,18 +81,14 @@ public:
 	
 	void insertionSort()
 	{
-        Node *cur = list->getNext();
-        Node *temp=cur;
-        while(cur != NULL)
-        {
-            temp = cur;
-            while(temp->getPre() != NULL && temp->getData() < temp->getPre()->getData())
-            {
-                swap(temp, temp->getPre());
-                temp = temp->getPre();
-            }
-            cur = cur->getNext();
-        }
+		Node* cur = list->getNext();
+		Node* temp=cur;
+		if(cur<cur->getPre() && cur->getPre()!=NULL)
+		{
+			swap(cur,cur->getPre());
+			cur=cur->getPre();
+		}
+
 	} 
 	
     void swap(Node *a, Node *b)
