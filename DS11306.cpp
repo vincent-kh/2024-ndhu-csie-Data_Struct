@@ -99,9 +99,9 @@ public:
 	
     void swap(Node *a, Node *b)
     {
-        int temp = a->getData();
-        a->setData(b->getData());
-        b->setData(temp);
+		int temp = a->getData();
+		a->setData(b->getData());
+		b->setData(temp);
     }
 
 	void print()

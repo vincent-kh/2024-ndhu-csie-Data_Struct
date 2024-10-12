@@ -13,30 +13,27 @@ public:
         top = 0;
         bot = 0;
     }
+
     int enqueue(int dt)
     {
-        if(top == SIZE-1)
+        if((top + 1) % SIZE == bot)
         {
-            if(bot == 0)
-                return -1;
-            else
-                top = 0;
+            return -1;
         }
         data[top] = dt;
-        top++;
+        top = (top + 1) % SIZE;
         return 1;
     }
+
     int *dequeue()
     {
         if(bot == top)
             return NULL;
         auto addr=&data[bot];
-        if(bot == SIZE-1)
-            bot = 0;
-        else
-            bot++;
+        bot = (bot + 1) % SIZE;
         return addr;
     }
+    
 private:
     int data[SIZE];
     int top, bot;
