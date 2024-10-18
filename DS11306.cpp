@@ -20,12 +20,15 @@ public:
 		next = NULL;
 		pre = NULL;
 	}
-	int getData() { return data; }
+	int getData()const { return data; }
 	Node *getNext() { return next; }
 	Node *getPre() { return pre; }
 	void setData(int d) { data = d; }
 	void setNext(Node *n) { next = n; }
 	void setPre(Node *p) { pre = p; }
+	bool operator<(const Node& other) const { return data < other.getData(); }
+    bool operator>(const Node& other) const { return data > other.getData(); }
+
 private:
 	int data;
 	Node *next, *pre; 
@@ -56,53 +59,99 @@ public:
 	
 	void bubbleSort()
 	{
-        Node *cur;
-		for(cur = list;cur != NULL;cur = cur->getNext())
+		if (list == nullptr) return;
+
+		bool swapped;
+		while (swapped)
 		{
-			for(Node *next = cur->getNext();next != NULL;next = next->getNext())
+			swapped = false;
+			Node *cur = list;
+
+			while (cur->getNext() != nullptr) 
 			{
-				if(cur->getData() > next->getData())
-					swap(cur, next);
+				if (*cur > *cur->getNext()) 
+				{
+					swap(cur, cur->getNext());
+					swapped = true;
+				} 
+				else 
+					cur = cur->getNext();
 			}
 		}
 	}
+
 	
-	void selectionSort()
+void selectionSort()
+{
+    Node *sortedTail = nullptr, *cur = list;
+
+    while (cur != nullptr) 
 	{
-        Node *cur, *next, *min;
-        for(cur = list;cur != NULL;cur = cur->getNext())
-        {
-            min = cur;
-            for(next = cur->getNext();next != NULL;next = next->getNext())
-                if(min->getData() > next->getData())
-                    min = next;
-            swap(cur, min);
+        Node *min = cur;
+        Node *next = cur->getNext();
+
+        while (next != nullptr) 
+		{
+            if (*next < *min) 
+                min = next;
+            next = next->getNext();
         }
-	}
-	
+
+        if (min != cur) 
+		{
+            if (min->getPre() != nullptr) 
+                min->getPre()->setNext(min->getNext());
+            if (min->getNext() != nullptr)
+                min->getNext()->setPre(min->getPre());
+
+            min->setNext(cur);
+            min->setPre(cur->getPre());
+
+            if (cur->getPre() != nullptr)
+                cur->getPre()->setNext(min);
+            else 
+                list = min;
+            cur->setPre(min);
+        }
+        sortedTail = min;
+        cur = sortedTail->getNext();
+    }
+}
+
 	void insertionSort()
 	{
-	    if (list == nullptr || list->getNext() == nullptr) return;
+		Node* cur = list->getNext();
+		while (cur != nullptr) 
+		{
+			Node* temp = cur;
+			while (temp->getPre() != nullptr && *temp < *temp->getPre()) 
+				swap(temp->getPre(), temp);
+			cur = cur->getNext();
+		}
+	}
 
-	    Node* cur = list->getNext();
-	    while (cur != nullptr)
-	    {
-	        Node* temp = cur;
-	        while (temp->getPre() != nullptr && temp->getData() < temp->getPre()->getData())
-	        {
-	            swap(temp, temp->getPre());
-	            temp = temp->getPre();
-	        }
-	        cur = cur->getNext();
-	    }
-	} 
 	
-    void swap(Node *a, Node *b)
-    {
-		int temp = a->getData();
-		a->setData(b->getData());
-		b->setData(temp);
-    }
+	void swap(Node *a, Node *b)
+	{
+		Node *a_pre = a->getPre();
+		Node *b_next = b->getNext();
+
+		if (a_pre != nullptr)
+			a_pre->setNext(b);
+
+		b->setPre(a_pre);
+		
+		b->setNext(a);
+		a->setPre(b);
+
+		if (b_next != nullptr) 
+			b_next->setPre(a);
+
+		a->setNext(b_next);
+
+		if (list == a) 
+			list = b;
+	}
 
 	void print()
 	{
@@ -123,15 +172,16 @@ int main()
 {
 	srand(time(NULL));
 	List *l = new List(10);
+
 	l->print();
 	l->bubbleSort();
 	l->print();
-	
+
 	l = new List(10);
 	l->print();
 	l->insertionSort();
 	l->print();
-	
+
 	l = new List(10);
 	l->print();
 	l->selectionSort();
