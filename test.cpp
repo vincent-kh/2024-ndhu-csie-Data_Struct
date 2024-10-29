@@ -1,153 +1,118 @@
 #include <iostream>
-#include <queue>
+#include <cmath>
+#include <vector>
 
 using namespace std;
 
 template<class T>
-class BinaryTreeInLinkedList 
-{
+class TreeInLinkedList 
+{   
 private:
     class TreeNode 
     {
     public:
-        TreeNode(T d) : data(d), left(nullptr), right(nullptr) {}
-        TreeNode *left, *right;
         T data;
+        TreeNode *parent;
+        vector<TreeNode*> children; // 新增：用於儲存子節點的向量
+
+        TreeNode(T d, TreeNode *p) : data(d), parent(p) {}
     };
+
     
-    int numOfElement;
-
-    // Queue to facilitate insertion in level-order fashion
-    queue<TreeNode*> q;
-
-    // Helper functions for traversals
-    void inorderTraversal(TreeNode* node) {
-        if (node == nullptr) return;
-        inorderTraversal(node->left);
-        cout << node->data << " ";
-        inorderTraversal(node->right);
-    }
-
-    void preorderTraversal(TreeNode* node) {
-        if (node == nullptr) return;
-        cout << node->data << " ";
-        preorderTraversal(node->left);
-        preorderTraversal(node->right);
-    }
-
-    void postorderTraversal(TreeNode* node) {
-        if (node == nullptr) return;
-        postorderTraversal(node->left);
-        postorderTraversal(node->right);
-        cout << node->data << " ";
-    }
 
 public:
-    TreeNode *root;
-    BinaryTreeInLinkedList() : root(nullptr), numOfElement(0) {}
-
-    TreeNode* addElementRecursively(TreeNode* node, T data) {
-        if (node == nullptr) {
-            return new TreeNode(data);
-        }
-
-        if (numOfElement % 2 == 0) {
-            node->left = addElementRecursively(node->left, data);
-        } else {
-            node->right = addElementRecursively(node->right, data);
-        }
-
-        return node;
-    }
-
-    void addElementAsCompleteTree(T data) {
-        numOfElement++;
-        root = addElementRecursively(root, data);
-    }
-
-    // In-order traversal
-    void displayInorder() {
-        inorderTraversal(root);
-        cout << endl;
-    }
-
-    // Pre-order traversal
-    void displayPreorder() {
-        preorderTraversal(root);
-        cout << endl;
-    }
-
-    // Post-order traversal
-    void displayPostorder() {
-        postorderTraversal(root);
-        cout << endl;
-    }
-
-    // print tree by recursion
-    void printTree(TreeNode* node) 
+    vector<TreeNode *> *nodeList; // 儲存樹中所有節點的向量
+    TreeInLinkedList() 
     {
-        if (node == nullptr) return;
-        //cout << node->data << " ";
-        if (node->left != nullptr) {
-            cout << node->data << " -> " << node->left->data<<endl;
-        }
-        if (node->right != nullptr) {
-            cout << node->data << " -> " << node->right->data<<endl;
-        }
-        printTree(node->left);
-        printTree(node->right);
-        
+        nodeList = new vector<TreeNode *>();
     }
 
-    // Destructor to free memory
-    ~BinaryTreeInLinkedList() {
-        // Helper function to delete nodes in post-order traversal
-        freeMemory(root);
+    void addElement(T data) 
+    {
+        int j, k = nodeList->size();
+        if(data == 1) 
+        {
+            nodeList->clear();
+            nodeList = new vector<TreeNode *>();
+            TreeNode *newNode = new TreeNode(data, nullptr);
+            nodeList->push_back(newNode);
+        }
+        else 
+        {
+            for(j = 0; j < k; j++) 
+            {
+                if(data % (*nodeList)[j]->data == 0) 
+                {
+                    TreeNode *newNode = new TreeNode(data, (*nodeList)[j]);
+                    (*nodeList)[j]->children.push_back(newNode); // 新增節點為子節點
+                    nodeList->push_back(newNode);
+                    break; // 確保每個元素只有一個父節點
+                }
+            }
+        }
     }
 
+    void displayPreorder() 
+    {
+        if (nodeList->empty()) return;
+        displayPreorderHelper(nodeList->front()); // 從根節點開始
+    }
+
+    void displayPostorder() 
+    {
+        if (nodeList->empty()) return;
+        displayPostorderHelper(nodeList->front()); // 從根節點開始
+    }
+    void drawTree(TreeNode *node, int depth) 
+    {
+        if (!node) return;
+        for (int i = 0; i < depth; i++) 
+        {
+            cout << "  ";
+        }
+        cout << node->data << endl;
+        for (TreeNode *child : node->children) 
+        {
+            drawTree(child, depth + 1); // 遞迴繪製每個子節點
+        }
+    }
 private:
-    void freeMemory(TreeNode* node) {
-        if (node == nullptr) return;
-        freeMemory(node->left);
-        freeMemory(node->right);
-        delete node;
+    void displayPreorderHelper(TreeNode *node) 
+    {
+        if (!node) return;
+        cout << node->data << " "; // 先輸出當前節點
+        for (TreeNode *child : node->children) 
+        {
+            displayPreorderHelper(child); // 遞迴訪問每個子節點
+        }
     }
+
+    void displayPostorderHelper(TreeNode *node) 
+    {
+        if (!node) return;
+        for (TreeNode *child : node->children) 
+        {
+            displayPostorderHelper(child); // 先遞迴訪問每個子節點
+        }
+        cout << node->data << " "; // 在輸出完子節點後輸出當前節點
+    }
+
+    
 };
 
 int main()
 {
-    BinaryTreeInLinkedList<int> *tree = new BinaryTreeInLinkedList<int>;
+    TreeInLinkedList<int> *tree = new TreeInLinkedList<int>();
     int n;
-    
-    // Input the number of elements to be inserted into the tree
-    cout << "Enter the number of elements to add: ";
     cin >> n;
+    for(int j = 1; j <= n; j++)
+        tree->addElement(j);
 
-    // Insert elements into the tree
-    cout << "Adding elements to the tree..." << endl;
-    for (int j = 0; j < n; j++) 
-    {
-        tree->addElementAsCompleteTree(j);
-    }
-
-    // Display the tree in level-order
-    cout << "Level-order (breadth-first) traversal: "<<endl;
-    tree->printTree(tree->root);
-
-    // Display in-order traversal
-    cout << "In-order traversal: ";
-    tree->displayInorder();
-
-    // Display pre-order traversal
-    cout << "Pre-order traversal: ";
     tree->displayPreorder();
-
-    // Display post-order traversal
-    cout << "Post-order traversal: ";
+    cout << endl;
     tree->displayPostorder();
+    cout << endl;
+    tree->drawTree(tree->nodeList->front(), 0);
 
-    // Free allocated memory
     delete tree;
-
-    return 0;
 }
