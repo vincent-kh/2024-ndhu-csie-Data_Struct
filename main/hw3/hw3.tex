@@ -1,0 +1,86 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{CJKutf8}
+\usepackage{amsmath}
+\usepackage{enumerate}
+\usepackage{color}
+\usepackage{multicol}
+
+\usepackage[left= 0.8in,right=0.8in,top=2cm,bottom=2cm]{geometry}
+\begin{document}
+\begin{CJK*}{UTF8}{bsmi}
+\title{Electromagnetics (II) Homework 1}
+\author{411025020 莊奕賢}
+\maketitle
+
+\begin{enumerate}
+    \begin{multicols}{2}
+        \item Stack operation
+        \begin{center}
+        \begin{tabular}{c|cc}
+          & Operation & Stack \\ \hline\hline
+        1 & push(5)   & 5     \\ \hline
+        2 & push(3)   & 5,3   \\ \hline
+        3 & pop()     & 5     \\ \hline
+        4 & push(2)   & 5,2   \\ \hline
+        5 & push(8)   & 5,2,8 \\ \hline
+        6 & pop()     & 5,2   \\ \hline
+        7 & pop()     & 5     \\ \hline
+        8 & push(9)   & 5,9   \\ \hline
+        9 & push(1)   & 5,9,1 \\ \hline
+        10 & pop()    & 5,9   \\ \hline
+        11 & push(7)  & 5,9,7 \\ \hline
+        12 & push(6)  & 5,9,7,6 \\ \hline
+        13 & pop()    & 5,9,7 \\ \hline
+        14 & pop()    & 5,9   \\ \hline
+        15 & push(4)  & 5,9,4 \\ \hline
+        16 & pop()    & 5,9   \\ \hline
+        17 & pop()    & 5     \\ \hline
+        \end{tabular}
+        \end{center}
+
+        \item Queue operation
+        \begin{center}
+        \begin{tabular}{c|cc}
+          & Operation & Queue \\ \hline\hline
+        1 & enqueue(5)   & 5     \\ \hline
+        2 & enqueue(3)   & 5,3   \\ \hline
+        3 & dequeue()    & 3     \\ \hline
+        4 & enqueue(2)   & 3,2   \\ \hline
+        5 & enqueue(8)   & 3,2,8 \\ \hline
+        6 & dequeue()    & 2,8   \\ \hline
+        7 & dequeue()    & 8     \\ \hline
+        8 & enqueue(9)   & 8,9   \\ \hline
+        9 & enqueue(1)   & 8,9,1 \\ \hline
+        10 & dequeue()   & 9,1   \\ \hline
+        11 & enqueue(7)  & 9,1,7 \\ \hline
+        12 & enqueue(6)  & 9,1,7,6 \\ \hline
+        13 & dequeue()   & 1,7,6 \\ \hline
+        14 & dequeue()   & 7,6   \\ \hline
+        15 & enqueue(4)  & 7,6,4 \\ \hline
+        16 & dequeue()   & 6,4   \\ \hline
+        17 & dequeue()   & 4     \\ \hline
+        \end{tabular}
+        \end{center}
+    \end{multicols}
+        \item Deque operation
+        \begin{center}
+        \begin{tabular}{c|ccc}
+          & Operation & Deque & return\\ \hline\hline
+        1 & insertFront(3)   & 3     &\\ \hline
+        2 & insertBack(8)    & 3,8   &\\ \hline
+        3 & insertBack(9)    & 3,8,9 &\\ \hline
+        4 & insertFront(5)   & 5,3,8,9& \\ \hline
+        5 & removeFront()    & 3,8,9 &\\ \hline
+        6 & eraseBack()      & 3,8   &\\ \hline
+        7 & first()          & 3,8   &3\\ \hline
+        8 & insertBack(7)    & 3,8,7 &\\ \hline
+        9 & removeFront()    & 8,7   &\\ \hline
+        10 & last()          & 8,7   &7\\ \hline
+        11 & eraseBack()     & 8     &\\ \hline
+        \end{tabular}
+        \end{center}
+    
+\end{enumerate}
+
+\end{CJK*}
+\end{document}

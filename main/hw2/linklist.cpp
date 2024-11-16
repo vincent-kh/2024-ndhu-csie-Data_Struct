@@ -16,7 +16,12 @@ public:
     };
 
     Linklist():head(nullptr),s(0){}
-    Node* addElement(T d)
+    ~Linklist()
+    {
+        while (head!=nullptr)
+            remove_Head();  
+    }
+    Node* add_Tail(T d)
     {
         Node* temp = new Node(d);
         if (head == nullptr)
@@ -35,8 +40,22 @@ public:
         s++;
         return temp;
     }
-    
-    void removeTailElement()
+    Node* add_Head(T d)
+    {
+        Node* temp = new Node(d);
+        if (head == nullptr)
+        {
+            head = temp;
+        }
+        else
+        {
+            temp->next = head;
+            head = temp;
+        }
+        s++;
+        return temp;
+    }
+    void remove_Tail()
     {
         if (head == nullptr)
         {
@@ -58,7 +77,17 @@ public:
         cur->next = nullptr;
         s--;
     }
-
+    void remove_Head()
+    {
+        if (head == nullptr)
+        {
+            return;
+        }
+        Node* temp = head;
+        head = head->next;
+        delete temp;
+        s--;
+    }
     void display()
     {
         Node* cur=head;
@@ -68,7 +97,7 @@ public:
             cur=cur->next;
         }
     }
-
+    bool isEmpty() {return s==0;}
     int size()  {return s;}
 private:
     Node* head;
@@ -79,12 +108,13 @@ int main()
     Linklist<int> l;
     for(int i=0;i<10;i++)
     {
-        l.addElement(i);
+        l.add_Tail(i*2);
+        l.add_Head(i*2+1);
     }
     cout<<l.size()<<endl;
     l.display();
     cout<<endl;
-    l.removeTailElement();
+    l.remove_Tail();
     cout<<l.size()<<endl;
     l.display();
     cout<<endl;
