@@ -1,0 +1,43 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{CJKutf8}
+\usepackage{amsmath}
+\usepackage{enumerate}
+\usepackage{color}
+\usepackage{multicol}
+
+\usepackage[left= 0.8in,right=0.8in,top=2cm,bottom=2cm]{geometry}
+\begin{document}
+\begin{CJK*}{UTF8}{bsmi}
+\title{Electromagnetics (II) Homework 4}
+\author{411025020 莊奕賢}
+\maketitle
+
+\begin{enumerate}[1.]
+    \item Vector operation
+    \begin{center}
+    \begin{tabular}{c|cl}
+        & Operation & Vector \\ \hline\hline
+    1 & insert(0,4)   & 4     \\ \hline
+    2 & insert(0,3)   & 3,4   \\ \hline
+    3 & insert(0,2)   & 2,3,4 \\ \hline
+    4 & insert(2,1)   & 2,3,1,4 \\ \hline
+    5 & insert(1,5)   & 2,5,3,1,4 \\ \hline
+    6 & insert(1,6)   & 2,6,5,3,1,4 \\ \hline
+    7 & insert(3,7)   & 2,6,5,7,3,1,4 \\ \hline
+    8 & insert(0,8)   & 8,2,6,5,7,3,1,4 \\ \hline
+    \end{tabular}
+    \end{center}
+
+    \item $kn$ access to $n$ element\\
+    對於一個有$n$個元素的陣列，存取$kn$次 \\
+    少於$k$次的存取的元素數量：\\
+    \newline
+    Min:\\
+    若所有元素都存取$k$次，則少於$k$次的存取的元素數量為0。\\
+    \newline
+    Max:\\
+    若有1個元素存取次數超過$k+n-1$次，則可能有$n-1$個元素存取次數少於$k$次。\\
+\end{enumerate}
+
+\end{CJK*}
+\end{document}
