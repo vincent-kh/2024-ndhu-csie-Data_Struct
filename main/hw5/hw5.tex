@@ -1,0 +1,32 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{CJKutf8}
+\usepackage{amsmath}
+\usepackage{enumerate}
+\usepackage{color}
+\usepackage{multicol}
+\usepackage[ruled,vlined,titlenumbered]{algorithm2e}
+\usepackage[left= 0.8in,right=0.8in,top=2cm,bottom=2cm]{geometry}
+\begin{document}
+\begin{CJK*}{UTF8}{bsmi}
+\title{Electromagnetics (II) Homework 5}
+\author{411025020 莊奕賢}
+\maketitle
+
+\begin{algorithm}[H]
+    \renewcommand{\algorithmcfname}{Function}
+    \renewcommand{\thealgocf}{}
+    \caption{Implement makeFirst(p) in $O(1)$ time}
+    \KwIn{A Double Linked List L and a pointer p to a node in L}
+    \BlankLine
+    \If{p = L.head}{
+        \Return
+    }
+    $p.prev.next \leftarrow p.next$\\
+    $p.next.prev \leftarrow p.prev$\\
+    $p.next \leftarrow L.head$\\
+    $p.prev \leftarrow \text{null}$\\
+    $L.head.prev \leftarrow p$\\
+    $L.head \leftarrow p$\\
+\end{algorithm}
+\end{CJK*}
+\end{document}

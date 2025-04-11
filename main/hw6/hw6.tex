@@ -1,0 +1,60 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{CJKutf8}
+\usepackage{amsmath}
+\usepackage{enumerate}
+\usepackage{color}
+\usepackage{multicol}
+\usepackage[ruled,vlined,titlenumbered]{algorithm2e}
+\usepackage[left= 0.8in,right=0.8in,top=2cm,bottom=2cm]{geometry}
+\usepackage{tikz}
+\begin{document}
+\begin{CJK*}{UTF8}{bsmi}
+\title{Electromagnetics (II) Homework 6}
+\author{411025020 莊奕賢}
+\maketitle
+
+\begin{enumerate}[1.]
+    \item File Tree 
+    \begin{enumerate}
+        \item The root of the tree is \textbf{"/user/rt/courses/"}.
+        \item Internal nodes is which nodes have at least one child.
+        \item \textbf{"cs016/"} have three children,\textbf{"homeworks/"}, 
+        \textbf{"programs/"} and \textbf{"grades"}.\\
+        And the nodes \textbf{"homeworks/"}, \textbf{"programs/"} each have three child nodes.\\
+         Therefore, the node \textbf{"cs016/"} have 9 descendant nodes.
+        \item The node \textbf{"cs016/"} have 1 ancestor node, \textbf{"/user/rt/courses/"}
+        \item The sibling nodes of \textbf{"homeworks/"} are \textbf{"programs/"} and \textbf{"grades"}
+        \item The nodes in the subtree rooted at \textbf{"projects/"} are \textbf{"papers/"}, 
+        \textbf{"demos/"}, \textbf{"buylow/"}, \textbf{"sellhigh/"}, \textbf{"market/"}.
+        \item The depth of the node \textbf{"papers/"} is 3.
+        \item The height of the tree is 4.
+        \item The output of preorderPrint(T,T.root())\\
+        /user/rt/courses/ cs016/ grades homeworks/ hw1 hw2 hw3 programs/ 
+        pr1 pr2 pr3 cs252/ projects/ papers/ buylow/ sellhigh/ demos/ market/ /grades
+        \item The output of postorderPrint(T,T.root())\\
+        grades hw1 hw2 hw3 homeworks/ pr1 pr2 pr3 programs/ cs016/ buylow sellhigh papers/ market 
+        demos/ projects/ grades cs252/ /user/rt/courses/
+    \end{enumerate}
+    \item Expressions Tree
+    $$ (5-(1+1))\times 7 = 21$$
+    \begin{center}
+    \begin{tikzpicture}[level/.style={sibling distance=50mm/#1}]
+        \node{$\times$}
+            child
+            {
+            node{$-$}
+                child{node{$5$}}
+                child
+                {
+                node{$+$}
+                    child{node{$1$}}
+                    child{node{$1$}}
+                }
+            }
+            child{node{7}};
+        \end{tikzpicture}
+    \end{center}
+\end{enumerate}
+
+\end{CJK*}
+\end{document}
