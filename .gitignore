@@ -1,5 +1,5 @@
 .vscode
-output/
+output
 main/output/
 main/*/output
 *.aux
