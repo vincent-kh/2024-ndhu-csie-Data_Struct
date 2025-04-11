@@ -7,3 +7,4 @@ main/*/output
 *.fls
 *.log
 *.synctex.gz
+test.cpp
